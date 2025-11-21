@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Party.WebApi.Context;
+using Party.WebApi.Convereters;
 using Party.WebApi.Model;
 using System.Linq;
 
@@ -43,7 +44,7 @@ namespace Party.WebApi.Repositories
                 changedEntity.Email = guest.Email;
                 changedEntity.Phone = guest.Phone;
                 changedEntity.Passport = guest.Passport;
-                changedEntity.Status = guest.Status;
+                changedEntity.Status = (DbStatus)guest.Status;
                 _db.SaveChanges();
                 return changedEntity;
             }
@@ -56,11 +57,11 @@ namespace Party.WebApi.Repositories
             public Guest? GetEmail(string email) => _db.Guests.AsNoTracking().FirstOrDefault(x => x.Email == email);
             public Guest? GetPhone(string phone) => _db.Guests.AsNoTracking().FirstOrDefault(x => x.Phone == phone);
             public Guest? GetPassport(string passport) => _db.Guests.AsNoTracking().FirstOrDefault(x => x.Passport == passport);
-            public IEnumerable<Guest> GetGuestsByStatus(string status)
+            public IEnumerable<Guest> GetGuestsByStatus(ApiStatus status)
             {
                 return _db.Guests
                     .AsNoTracking()
-                    .Where(x => x.Status == status)
+                    .Where( x => x.Status == DbStatusConverter.ConvertToRepository(status))
                     .ToList();
             }
         }

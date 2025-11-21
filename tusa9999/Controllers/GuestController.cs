@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Party.WebApi.Convereters;
 using Party.WebApi.Model;
 using Party.WebApi.Repositories;
 
@@ -31,9 +32,9 @@ namespace Party.WebApi.Controllers
             
         }
         [HttpGet("status/{status}")]
-        public ActionResult<IEnumerable<Guest>> GetByStatus(string status)
+        public ActionResult<IEnumerable<Guest>> GetByStatus(ApiStatus status)
         {
-            var guestByStatus = _guestRep.GetGuestsByStatus(status.Trim());
+            var guestByStatus = _guestRep.GetGuestsByStatus(status );
             if (guestByStatus == null)
                 return NotFound("We can't find this guest");
             return Ok(guestByStatus);
@@ -58,7 +59,7 @@ namespace Party.WebApi.Controllers
                 Email = guest.Email,
                 Phone = guest.Phone,
                 Passport = guest.Passport,
-                Status = guest.Status
+                Status = DbStatusConverter.ConvertToRepository(guest.Status )
             };
 
             var addedGuest = _guestRep.Add(newGuest);

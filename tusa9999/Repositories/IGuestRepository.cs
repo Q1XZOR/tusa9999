@@ -15,7 +15,7 @@ namespace Party.WebApi.Repositories
         public Guest? GetPhone(string phone);
         public Guest? GetPassport(string passport);
 
-        IEnumerable<Guest> GetGuestsByStatus(string status);
+        IEnumerable<Guest> GetGuestsByStatus(ApiStatus status);
 
     }
 }
