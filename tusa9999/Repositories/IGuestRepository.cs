@@ -1,6 +1,6 @@
 ﻿using Party.WebApi.Model;
 
-namespace Party.WebApi.Interfaces
+namespace Party.WebApi.Repositories
 {
     public interface IGuestRepository
     {
@@ -15,7 +15,7 @@ namespace Party.WebApi.Interfaces
         public Guest? GetPhone(string phone);
         public Guest? GetPassport(string passport);
 
-        
+        IEnumerable<Guest> GetGuestsByStatus(string status);
 
     }
 }

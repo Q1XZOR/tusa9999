@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Party.WebApi.Model;
-using Party.WebApi.Interfaces;
+using Party.WebApi.Repositories;
 
 namespace Party.WebApi.Controllers
 {
@@ -21,24 +21,29 @@ namespace Party.WebApi.Controllers
             return Ok(_guestRep.GetAll());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public ActionResult<Guest> GetById(int id)
         {
             var guestById = _guestRep.GetById(id);
             if (guestById == null)
                 return NotFound("We can't find this guest");
             return Ok(guestById);
+            
         }
+        [HttpGet("status/{status}")]
+        public ActionResult<IEnumerable<Guest>> GetByStatus(string status)
+        {
+            var guestByStatus = _guestRep.GetGuestsByStatus(status.Trim());
+            if (guestByStatus == null)
+                return NotFound("We can't find this guest");
+            return Ok(guestByStatus);
 
-        
+            
+        }
         [HttpPost]
         public ActionResult<Guest> Add(ApiGuestDto guest)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
+            
             var existingGuest = _guestRep.GetById(guest.Id);
             if (existingGuest != null)
             {
@@ -52,7 +57,8 @@ namespace Party.WebApi.Controllers
                 LastName = guest.LastName,
                 Email = guest.Email,
                 Phone = guest.Phone,
-                Passport = guest.Passport
+                Passport = guest.Passport,
+                Status = guest.Status
             };
 
             var addedGuest = _guestRep.Add(newGuest);

@@ -1,6 +1,6 @@
-﻿using Party.WebApi.Interfaces;
+﻿using Party.WebApi.Repositories;
 
-namespace Party.WebApi.Repositories
+namespace Party.WebApi
 {
     public interface IUnitOfWork : IDisposable
     {
