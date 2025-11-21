@@ -2,7 +2,7 @@
 using Party.WebApi.Model;
 
 
-namespace Party.WebApi.Infrastruture.Data
+namespace Party.WebApi.Context
 {
     public class GuestDbContext : DbContext
     {

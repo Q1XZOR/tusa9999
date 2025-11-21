@@ -1,6 +1,6 @@
-using Party.WebApi.Infrastruture.Data;
 using Microsoft.EntityFrameworkCore;
 using Party.WebApi.Repositories;
+using Party.WebApi.Context;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
